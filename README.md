@@ -2,7 +2,7 @@ The fast marching (FM) method calculates first arrival time of a seismic wave tr
 
   
 
-The [Fast marching method](http://en.wikipedia.org/wiki/Fast_marching_method) is a very rapid method for solving the [Eikonal equation](http://en.wikipedia.org/wiki/Eikonal_equation), which describes the advances of a wave \*front\*. However it's applicable to a great variety of problems (see for example the [webpage](http://math.berkeley.edu/~sethian/2006/Applications/Menu_Expanded_Applications.html) of J.A. Sethian, one of the original developers). Some applications are shown by the output of my program below. 
+The [Fast marching method](http://en.wikipedia.org/wiki/Fast_marching_method) is a very rapid method for solving the [Eikonal equation](http://en.wikipedia.org/wiki/Eikonal_equation), which describes the advances of a wave*front*. However it's applicable to a great variety of problems (see for example the [webpage](http://math.berkeley.edu/~sethian/2006/Applications/Menu_Expanded_Applications.html) of J.A. Sethian, one of the original developers). Some applications are shown by the output of my program below. 
 The method is very interesting, containing elements from areas such as level-set methods for surface tracking, Dijikstra's method for optimal network path solutions, finite difference schemes and upwind causality conditions, and tree-sorting algorithms.
 
   
@@ -13,7 +13,10 @@ This implementation exist both in Matlab and C++ with a Matlab wrapper supplied 
 
 Both 1st order and 2nd order finite difference schemes are available, and warning messages are displayed when the method has to revert to the 1st order scheme, which is more stable than the second order scheme. This is in contrast to [the implementation](http://www.mathworks.com/matlabcentral/fileexchange/24531-accurate-fast-marching) that is already on the file exchange, which offers more accurate schemes but less stable treatment of extreme cases and no warning messages.
 
-  
+
+## Installation
+Just download. Test with one of the `TS_` scripts.
+
 
 Note: Multicore mode can be had using [this multicore module](http://www.mathworks.com/matlabcentral/fileexchange/13775-multicore-parallel-processing-on-multiple-cores).
 
@@ -25,12 +28,12 @@ Note: The C++ code uses infinity as a number to avoid use of boolean switches. T
 
   
 
-**Results**
+## Results
 
 The cooler output plots are further below.  
   
 
-If you drop a stone into the water, rings representing wavefronts propagate outwards from the "epicenter", or source point, where you dropped the stone. The medium (water) being uniform, the wave propagates with the same constant speed in all directions, creating \*circular\* rings. I.e. in this simple case, an exact analytic solution is known. The time, T(r), taken to travel to any point a distance, r, from the center, is equal to r/F, where F represents the speed of the wave in water. If you drop two stones, you get two source points. The plots of T below illustrate this scenario. The upper two solutions were produced with 1st and 2nd order fast marching methods. The bottom left solution is the analytic one. The bottom right plot shows the relative error between the fast marching solution of order 2 and the analytic solution.
+If you drop a stone into the water, rings representing wavefronts propagate outwards from the "epicenter", or source point, where you dropped the stone. The medium (water) being uniform, the wave propagates with the same constant speed in all directions, creating *circular* rings. I.e. in this simple case, an exact analytic solution is known. The time, T(r), taken to travel to any point a distance, r, from the center, is equal to r/F, where F represents the speed of the wave in water. If you drop two stones, you get two source points. The plots of T below illustrate this scenario. The upper two solutions were produced with 1st and 2nd order fast marching methods. The bottom left solution is the analytic one. The bottom right plot shows the relative error between the fast marching solution of order 2 and the analytic solution.
 
 ![circle](./Pics/circle.jpg)
 
@@ -40,17 +43,15 @@ If you drop a stone into the water, rings representing wavefronts propagate outw
 
 Here's the sort of thing the client might use this for. Let's say the earth below us consists of 4 distinct layers, each with its own propagation speed, F(x,z), illustrated below.
 
-**
 
 ![strata-speedmap](./Pics/strata-speedmap.jpg)
 
 
 
 
-**This time, the wavefronts will not produce circular rings, or analytic solutions that are easy to find. However, the fast marching method is not deterred. All it needs is a specification of the speed map F(x,z) and it will give you T(x,z).
+This time, the wavefronts will not produce circular rings, or analytic solutions that are easy to find. However, the fast marching method is not deterred. All it needs is a specification of the speed map F(x,z) and it will give you T(x,z).
 
   
-**
 
 ![strata](./Pics/strata.jpg)
 
@@ -60,7 +61,6 @@ Here's the sort of thing the client might use this for. Let's say the earth belo
 
 
 
-**
 
 * * *
 
@@ -82,11 +82,10 @@ The implementation is flexible enough to handle trivial/exceptional cases. For e
 
 * * *
 
-This example illustrates that one can insert impenetrable "walls" in the domain, where the speed of the wave is defined to be zero. This is in many ways an exceptional case, as it may result in division by zero or zero\*inf computations, and so it requires special attention. Also, the speed map has been bombarded with random noise, creating the noisy look of the plot.
+This example illustrates that one can insert impenetrable "walls" in the domain, where the speed of the wave is defined to be zero. This is in many ways an exceptional case, as it may result in division by zero or zero*inf computations, and so it requires special attention. Also, the speed map has been bombarded with random noise, creating the noisy look of the plot.
 
   
 
-**
 
 ![random](./Pics/random.jpg)
 
@@ -98,7 +97,6 @@ This example illustrates that one can insert impenetrable "walls" in the domain,
 
 
 
-**
 
 Now we're getting to the cool parts. Did you know the method can be used to solve labyrinths? Here's how. Make a speed map F(x,y) where F=0 wherever there's a wall and F=1 elsewhere. Put the source point at the end (exit) of the labyrinth, and run the fast marching method. Then the wavefront will propagate through the labyrinth, including cul-de-sacs, and produce a map of T(x,y) as a result again. This tells you how long it takes to reach any point in the labyrinth from the exit, and is shown by the color in the maze below.
 
@@ -112,9 +110,7 @@ How do you find the path through the labyrinth from the color map? The white lin
 
   
 
-Cooler yet, the very same method can be used to figure out the best way to, say, move your bed through the maze that is your house! All you need is to make a 3D speed map model of the house, and set F=0 wherever there's a wall. However, since the bed is not a point, but an object with a finite size, you might want to add some complexity -- increasing the dimensionality of your model to 5D. The two new dimensions will be used to specify the orientation of the bed (elevation and azimuth). Now the speed map is a function of five variables: F(x,y,z,
-
-θ**,** ϕ). So, say you're in a narrow hallway. Then F=1 for most values of θ and  ϕ, except when the bed would crash with the walls, in which case F=0. Also, you might want to slow down (by lowering F) when you're in a tight spot, to reflect the fact that progress will be slower. In the end, you run a ray tracer backwards, which will give you the fastest/optimal way of moving the bed out of the apartment.
+Cooler yet, the very same method can be used to figure out the best way to, say, move your bed through the maze that is your house! All you need is to make a 3D speed map model of the house, and set F=0 wherever there's a wall. However, since the bed is not a point, but an object with a finite size, you might want to add some complexity -- increasing the dimensionality of your model to 5D. The two new dimensions will be used to specify the orientation of the bed (elevation and azimuth). Now the speed map is a function of five variables: F(x,y,z,θ,ϕ). So, say you're in a narrow hallway. Then F=1 for most values of θ and  ϕ, except when the bed would crash with the walls, in which case F=0. Also, you might want to slow down (by lowering F) when you're in a tight spot, to reflect the fact that progress will be slower. In the end, you run a ray tracer backwards, which will give you the fastest/optimal way of moving the bed out of the apartment.
 
   
 
