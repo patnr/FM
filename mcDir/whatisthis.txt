@@ -1,0 +1,1 @@
+This folder/directory exists simply to hold the temporary data-exchange files created by the multicore functionality.
