@@ -406,7 +406,12 @@ double calcTime(int i, int j, int k, double Fijk, double *T, bool *Frozen,
 						zmin1=Inf;
 
 				*eFlag = 2;
-				time = MIN((MIN(xmin1,zmin1)),(ymin1)) + 1.0/Fijk;
+				if (xmin1 < ymin1 && xmin1 < zmin1)
+					time = xmin1 + dx / Fijk;
+				else if (ymin1 < zmin1)
+					time = ymin1 + dy / Fijk;
+				else
+					time = zmin1 + dz / Fijk;
 		}
 		else{
 				*eFlag = 0;
