@@ -309,7 +309,7 @@ elseif ((d<0) && (order==1))
 	if (ox==0)
 		xmin1 = Inf;
 	end
-	if (xmin1 < xmin2)
+	if (xmin1 < ymin1)
 		time = xmin1 + dx / Fij;
 	else
 		time = ylim1 + dy / Fik;
