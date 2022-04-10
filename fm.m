@@ -131,6 +131,9 @@ SourcePoints(1:2,:) = flipud(SourcePoints(1:2,:));
 if opts.useMC
 	% Add multicore system path
 	addpath('../Multicore');
+	% If you don't have this path, you probably need to download the multicore package:
+	% https://www.mathworks.com/matlabcentral/fileexchange/13775-multicore-parallel-processing-on-multiple-cores
+	% And rename it to '../Multicore'
 	
 	% Adjust nCores according to the number of cores in computer.
 	nCores = 2;
