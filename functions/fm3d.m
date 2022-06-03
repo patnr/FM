@@ -246,13 +246,7 @@ elseif ((d<0) && (order==1))
 	if (oz==0)
 		zmin1 = Inf;
 	end
-	if (xmin1 < ymin1 && xmin1 < zmin1)
-		time = xmin1 + dx / Fijk;
-	elseif (ymin1 < zmin1)
-		time = ymin1 + dy / Fijk;
-	else
-		time = zmin1 + dz / Fijk;
-	end
+	time = min([(xmin1 + dx / Fijk) (ymin1 + dy/Fijk) (zmin1 + dz/Fijk)]);
 	eFlag = 2;
 else
 	% Solve quadratic equation. Only use the maximum root.
