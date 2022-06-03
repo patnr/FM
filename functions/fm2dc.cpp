@@ -349,10 +349,7 @@ double calcTime(int i, int j, double Fij, double *T, bool *Frozen,
 						xmin1=Inf;
 
 				*eFlag = 2;
-				if (xmin1 < ymin1)
-					time = xmin1 + dx / Fij;
-				else
-					time = ymin1 + dy / Fij;
+				time = MIN(xmin1 + dx / Fij, ymin1 + dy / Fij);
 		}
 		else{
 				*eFlag = 0;
