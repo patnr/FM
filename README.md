@@ -16,9 +16,10 @@ Both 1st order and 2nd order finite difference schemes are available, and warnin
 
 
 ## Installation
-Just download. Test with one of the `TS_` scripts. Output is described below.
 
-Note: The C++ code uses infinity as a number to avoid use of boolean switches. This works on the GNU compiler, but I don't think it ports to all compilers. Alternatively, just stick to the Matlab implementations.
+Download. Test with one of the `TS_` scripts. Output is described below.
+
+Note: The C++ code relies on *infinity* to avoid the use of boolean switches. This works on `gcc` (the GNU compiler), but I don't think it ports to all compilers. Alternatively, just stick to the Matlab implementations.
 
   
 
